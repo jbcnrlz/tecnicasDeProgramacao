@@ -6,7 +6,12 @@ package introducao;
 public class exemplo {
 
     public static void main(String[] args) {
-        System.out.println("Primeiro exemplo!");
+        exemplo e = new exemplo();
+        System.out.println("Olha o numero legal = "+Integer.toString(e.mostrarNumeroLegal()));
+    }
+
+    public int mostrarNumeroLegal(){
+        return 10;
     }
 
 }
