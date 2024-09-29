@@ -1,6 +1,6 @@
 package produtos;
 
-public class Computador implements Eletronicos{
+public class Computador implements Eletronicos, Persistente{
 
 	private String marca;
 	private String processador;
@@ -75,6 +75,24 @@ public class Computador implements Eletronicos{
 			textOutput += "Gamer: Não\n";
 		}
 		return textOutput;
+	}
+
+	@Override
+	public boolean salvar() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean atualizar() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deletar() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 	
