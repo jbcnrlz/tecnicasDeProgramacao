@@ -3,6 +3,7 @@ package conexaoBanco;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
 
 import dados.Genero;
 
@@ -55,6 +56,25 @@ public class ManipularGenero extends ManipularItemBanco{
 			e.printStackTrace();
 		}
 		return 0;
+	}
+	
+	public static LinkedList<Genero> getAll(){
+		GestaoDeConexao gc = GestaoDeConexao.constuirConexao();
+		PreparedStatement ps = gc.fazQuery("SELECT id, nome FROM Genero;");
+		ResultSet rs;
+		LinkedList<Genero> llg = new LinkedList<Genero>();
+		try {
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				Genero g = new Genero(rs.getString(2));
+				g.setId(rs.getInt(1));
+				llg.add(g);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return llg;		
 	}
 	
 }

@@ -6,6 +6,10 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/Users/joaoc/OneDrive/Área de Trabalho/mariadb-java-client-3.4.1.jar"/>
+	<classpathentry kind="lib" path="D:/PycharmProjects/tecnicasDeProgramacao/mariadb-java-client-3.4.1.jar"/>
+	<classpathentry kind="lib" path="com.jgoodies.forms_1.9.0.v20240327-0800.jar"/>
+	<classpathentry kind="lib" path="com.jgoodies.common_1.8.1.v20240327-0800.jar"/>
+	<classpathentry kind="lib" path="com.miglayout.swing_11.3.0.jar"/>
+	<classpathentry kind="lib" path="com.miglayout.core_11.3.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
