@@ -31,14 +31,33 @@ public class ManipularGenero extends ManipularItemBanco{
 
 	@Override
 	public boolean deletar() {
-		// TODO Auto-generated method stub
-		return false;
+		Genero g = Genero.class.cast(this.getO());
+		PreparedStatement ps = this.getCc().fazQuery("DELETE FROM Genero WHERE id = ?;");				
+		try {
+			ps.setInt(1, g.getId());
+			ps.executeUpdate();			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 
 	@Override
 	public boolean atualizar() {
-		// TODO Auto-generated method stub
-		return false;
+		Genero g = Genero.class.cast(this.getO());
+		PreparedStatement ps = this.getCc().fazQuery("UPDATE Genero SET nome = ? WHERE id = ?;");
+		try {
+			ps.setString(1, g.getNome());
+			ps.setInt(2, g.getId());
+			System.out.println(ps);
+			boolean rs = ps.execute();
+		}catch (SQLException e) {
+			System.err.println("Erro ao atualizar");
+			e.printStackTrace();
+			return false;			
+		}		
+		return true;
 	}
 
 	@Override
@@ -75,6 +94,25 @@ public class ManipularGenero extends ManipularItemBanco{
 			e.printStackTrace();
 		}
 		return llg;		
+	}
+	
+	public static Genero getByID(int id) {
+		GestaoDeConexao gc = GestaoDeConexao.constuirConexao();
+		PreparedStatement ps = gc.fazQuery("SELECT id, nome FROM Genero WHERE id = ?;");		
+		ResultSet rs;
+		try {
+			ps.setInt(1, id);
+			rs = ps.executeQuery();
+			while (rs.next()) {				
+				Genero g = new Genero(rs.getString(2));
+				g.setId(rs.getInt(1));
+				return g;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 }

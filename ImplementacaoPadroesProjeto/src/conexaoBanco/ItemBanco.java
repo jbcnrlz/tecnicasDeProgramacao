@@ -6,5 +6,4 @@ public interface ItemBanco {
 	public boolean deletar();
 	public boolean atualizar();
 	public int getID();
-	
 }

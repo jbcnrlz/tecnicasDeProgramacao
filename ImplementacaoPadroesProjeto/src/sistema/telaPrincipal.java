@@ -36,17 +36,24 @@ import net.miginfocom.swing.MigLayout;
 public class telaPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+	private static JFrame principal;
 	private JPanel contentPane;
 
 	/**
 	 * Launch the application.
 	 */
+	
+	public static JFrame getPrincipal() {
+		return telaPrincipal.principal;
+	}
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					telaPrincipal frame = new telaPrincipal();
+					telaPrincipal frame = new telaPrincipal();					
 					frame.setVisible(true);
+					telaPrincipal.principal = frame;
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

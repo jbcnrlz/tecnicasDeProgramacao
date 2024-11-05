@@ -47,7 +47,9 @@ public class ManipularJogo extends ManipularItemBanco{
 	@Override
 	public int getID() {
 		Jogos g = Jogos.class.cast(this.getO());
-		PreparedStatement ps = this.getCc().fazQuery("SELECT id FROM Jogos where nome = ? ORDER BY id DESC;");
+		PreparedStatement ps = this.getCc().fazQuery(
+			"SELECT id FROM Jogos where nome = ? ORDER BY id DESC;"
+		);
 		try {
 			ps.setString(1, g.getNome());
 			ResultSet rs = ps.executeQuery();

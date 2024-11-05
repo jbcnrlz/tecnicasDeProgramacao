@@ -31,6 +31,7 @@ import java.awt.event.ActionEvent;
 public class cadastroGenero extends JInternalFrame {
 
 	private static final long serialVersionUID = 1L;
+	private static Genero gen = null;
 	private JTextField textField;
 
 	/**
@@ -40,7 +41,7 @@ public class cadastroGenero extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					cadastroGenero frame = new cadastroGenero();
+					cadastroGenero frame = new cadastroGenero(0);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -52,7 +53,11 @@ public class cadastroGenero extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public cadastroGenero() {
+	public cadastroGenero(int id) {
+		setClosable(true);
+		if (id != 0) {
+			cadastroGenero.gen = ManipularGenero.getByID(id);
+		}
 		setTitle("Cadastrar Genero");
 		setMaximizable(true);
 		setIconifiable(true);
@@ -66,15 +71,26 @@ public class cadastroGenero extends JInternalFrame {
 		getContentPane().add(textField, "cell 2 0,growx");
 		textField.setColumns(10);
 		
+		if (id != 0) {
+			textField.setText(cadastroGenero.gen.getNome());
+		}
+		
 		JButton btnNewButton = new JButton("Salvar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Genero g = new Genero(textField.getText());
-				ManipularGenero mg = new ManipularGenero(GestaoDeConexao.constuirConexao(), g);
-				mg.salvar();
+				if (cadastroGenero.gen != null) {
+					cadastroGenero.gen.setNome(textField.getText());
+					ManipularGenero mg = new ManipularGenero(GestaoDeConexao.constuirConexao(), cadastroGenero.gen);
+					mg.atualizar();
+				} else {
+					Genero g = new Genero(textField.getText());
+					ManipularGenero mg = new ManipularGenero(GestaoDeConexao.constuirConexao(), g);
+					mg.salvar();	
+				}				
 				Container c = SwingUtilities.getAncestorOfClass(JInternalFrame.class, (Component) e.getSource());
 				if (c != null) {
 					JInternalFrame jf = JInternalFrame.class.cast(c);
+					ListaGeneros.getCurrWindow().updateTable();
 					jf.dispose();					
 				}
 			}
