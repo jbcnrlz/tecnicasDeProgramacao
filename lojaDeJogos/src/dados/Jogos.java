@@ -4,9 +4,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import dao.ConnectionManager;
 import dao.Persistir;
 
-public class Jogos implements Persistir{
+public class Jogos{
 
 	private int id;
 	private String nome;
@@ -41,43 +42,22 @@ public class Jogos implements Persistir{
 		this.generoDoJogo = generoDoJogo;
 	}
 
-	@Override
 	public boolean salvar() {
 		try {
-			Class.forName("org.mariadb.jdbc.Driver");
-			Connection cn = DriverManager.getConnection(
-				"jdbc:mariadb://localhost:3306/lojaDeJogos",
-				"jbcnrlz",
-				"a12b25c54");
-			PreparedStatement st = cn.prepareStatement(
-				"INSERT INTO Jogos(nome,preco,Genero_id) "
-				+ "values(?,?,?);"
-			);
+			ConnectionManager cm = ConnectionManager.buildConnection();
+			PreparedStatement st = cm.doQuery("INSERT INTO Jogos(nome,preco,Genero_id) values(?,?,?);");
+			st.setString(1, this.getNome());
 			st.setString(1, this.getNome());
 			st.setFloat(2, this.getPreco());
 			st.setInt(3, this.getGeneroDoJogo().getId());
 			int ri = st.executeUpdate();
-			cn.close();
+			return true;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			System.err.println("Erro ao salvar");
 			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return true;
-	}
+			return false;
+		}		
 
-	@Override
-	public boolean deletar() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean atualizar() {
-		// TODO Auto-generated method stub
-		return false;
 	}
 	
 }

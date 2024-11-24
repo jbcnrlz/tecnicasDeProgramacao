@@ -115,4 +115,23 @@ public class ManipularGenero extends ManipularItemBanco{
 		return null;
 	}
 	
+	public static Genero getByNome(String nome) {
+		GestaoDeConexao gc = GestaoDeConexao.constuirConexao();
+		PreparedStatement ps = gc.fazQuery("SELECT id, nome FROM Genero WHERE nome = ?;");		
+		ResultSet rs;
+		try {
+			ps.setString(1, nome);
+			rs = ps.executeQuery();
+			while (rs.next()) {				
+				Genero g = new Genero(rs.getString(2));
+				g.setId(rs.getInt(1));
+				return g;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;		
+	}
+	
 }

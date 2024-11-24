@@ -1,0 +1,4 @@
+org.mariadb.jdbc.Driver
+jdbc:mariadb://localhost:3306/lojadejogosTest
+jbcnrlz
+a12b25c54

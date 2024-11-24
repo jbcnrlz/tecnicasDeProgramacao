@@ -2,22 +2,18 @@ package principal;
 
 import dados.Genero;
 import dados.Jogos;
+import dao.ConnectionManager;
+import dao.PersistirGenero;
 
 public class SistemaPrincipal {
 
 	public static void main(String[] args) {
 		Genero gen = new Genero("Ação");
-		if (gen.salvar()) {
-			System.out.println("Salvo com sucesso!");
-		} else {
-			System.out.println("Erro ao salvar!");
-		}
-		Jogos game = new Jogos("The ultimate adventure of Ximira", 325.12f, gen);
-		if (game.salvar()) {
-			System.out.println("Salvo com sucesso!");
-		} else {
-			System.out.println("Erro ao salvar!");
-		}		
+		System.out.println(gen.getId());
+		ConnectionManager cm = ConnectionManager.buildConnection();
+		PersistirGenero pg = new PersistirGenero(cm, gen);
+		pg.salvar();
+		System.out.println(gen.getId());
 	}
 	
 }

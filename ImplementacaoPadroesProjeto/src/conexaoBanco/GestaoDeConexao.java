@@ -16,8 +16,8 @@ public class GestaoDeConexao {
 	private String driverConexao;
 	private String urlConexao;
 	private String usuario;
-	private String senha;
-	private Connection con;
+	private String senha;	
+	private Connection con;	
 	
 	private GestaoDeConexao() throws ConfiguracaoNaoEncontradaException {
 		List<String> conf = this.getConfigs("configs.txt");
@@ -30,6 +30,19 @@ public class GestaoDeConexao {
 		this.senha = conf.get(3);
 		this.con = null;
 	}
+	
+	private GestaoDeConexao(String path) throws ConfiguracaoNaoEncontradaException {
+		List<String> conf = this.getConfigs(path);
+		if (conf == null) {
+			throw new ConfiguracaoNaoEncontradaException("Config. perdida");
+		}
+		this.driverConexao = conf.get(0);
+		this.urlConexao = conf.get(1);
+		this.usuario = conf.get(2);
+		this.senha = conf.get(3);
+		this.con = null;
+	}
+
 	
 	public PreparedStatement fazQuery(String q) {
 		this.iniciarConexao();
@@ -72,6 +85,17 @@ public class GestaoDeConexao {
 	
 	public Connection getCon() {
 		return this.con;
+	}
+
+	public static GestaoDeConexao constuirConexao(String path) {
+		if (GestaoDeConexao.gdc == null) {
+			try {
+				GestaoDeConexao.gdc = new GestaoDeConexao(path);
+			}catch (ConfiguracaoNaoEncontradaException ce) {
+				System.err.println("VErifique o path do arquivo.");
+			}
+		}
+		return GestaoDeConexao.gdc;
 	}
 	
 	public static GestaoDeConexao constuirConexao() {
